@@ -1,36 +1,28 @@
-def exponential_search(arr, n, x):
-    if arr[0] == x:
+#this script is made to make exponential search using the binary search too which is created inside this script too
+
+
+#here we create the exponential_search function which takes as input a list of integers and an integer to search
+#in this function we perform an exponential search to find an upper bound for the binary search 
+def exponential_search(list, x):
+    if list[0] == x:
         return 0
- 
     i = 1
-    while i < n and arr[i] <= x:
-        i = i * 2
- 
-    return _search(arr, i // 2, min(i, n), x)
- 
- 
-def _search(arr, l, r, x):
-    while r >= l:
-        mid = l + (r - l) // 2
- 
-        if arr[mid] == x:
-            return mid
- 
-        elif arr[mid] > x:
-            r = mid - 1
- 
+    while i < len(list) and list[i] <= x:
+        i *= 2
+    lower = i // 2
+    upper = min(i, len(list) - 1)
+    return binary_search(list, x, lower, upper)#we return the list,the integer and the uppper and lower bounds for the binary search    
+
+    
+def binary_search(list, x, lower, upper):
+    while lower <= upper:
+        mid = (lower + upper) // 2
+        if list[mid] < x:
+            lower = mid + 1
+        elif list[mid] > x:
+            upper = mid - 1
         else:
-            l = mid + 1
- 
-    return -1
- 
- 
-arr = [2, 3, 4, 10, 40]
-x = 10
-n = len(arr)
-result = exponential_search(arr, n, x)
- 
-if result == -1:
-    print("Element not found")
-else:
-    print("Element found at index", result)
+            return mid
+    return -1  # Not found
+    
+#the binary search here is performed between the range that is given by the above-mentioned exponential search
